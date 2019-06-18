@@ -81,7 +81,7 @@ function createServer(port, path) {
 }
 function runAction() {
     var shell = process.env.SHELL;
-    var cmdArgs = ['-c'];
+    var cmdArgs = ['-c', args.command];
     var options = { stdio: 'inherit' };
     if (shell && osUtils_1.isCygwin()) {
         shell = osUtils_1.getCygwinPath(shell);
@@ -96,8 +96,8 @@ function runAction() {
             currentProcess.kill();
         }
         logger_1.logger.info("Running command: \"" + args.command + "\"");
-        startTime = new Date();
         currentProcess = osUtils_1.runShellCommand(shell, cmdArgs, options);
+        startTime = new Date();
         currentProcess.on('close', function () {
             endTime = new Date();
             logger_1.logger.info("Done. Time elapsed: " + (+endTime - +startTime) + "ms");
@@ -112,9 +112,12 @@ function main() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, createServer(8080)];
+                case 0: return [4 /*yield*/, createServer(args.port)];
                 case 1:
                     _a.sent();
+                    if (args.start) {
+                        runAction();
+                    }
                     return [2 /*return*/];
             }
         });

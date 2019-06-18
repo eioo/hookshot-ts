@@ -8,7 +8,7 @@ import { logger } from './logger';
 export function runShellCommand(
   shell: string,
   args: string[],
-  options?: childProcess.SpawnOptions
+  options: childProcess.SpawnOptions
 ) {
   return childProcess.spawn(shell, args, options);
 }

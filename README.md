@@ -10,9 +10,12 @@
 
 This is a fork from [coreh/hookshot](oreh/hookshot) converted to TypeScript.
 
-## Installation
+## Installation & building
 
-`pnpm install`
+```
+pnpm install
+pnpm build
+```
 
 ### Adding to path
 

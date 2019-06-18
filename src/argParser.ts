@@ -12,7 +12,7 @@ export function parseArguments() {
       ).version
     )
     .usage('[options] <command>')
-    .option('-p, --port <n>', 'Port number for webhook', parseInt, 3000)
+    .option('-p, --port <n>', 'Port number for webhook', 3000)
     .option('-w, --webhookPath <path>', 'Path for webhook', '/')
     .option('-s, --start', 'Run command on start');
 
@@ -31,9 +31,8 @@ export function parseArguments() {
     logger.error('Please supply a command to run');
     process.exit(1);
   }
-
   return {
-    port: program.port,
+    port: Number(program.port) || 3000,
     webhookPath: program.webhookPath,
     start: program.start,
     command: program.args.join(' '),

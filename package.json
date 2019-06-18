@@ -9,24 +9,28 @@
     "start": "ts-node-dev src/index.ts"
   },
   "devDependencies": {
+    "@types/node": "^12.0.8",
     "@types/signale": "^1.2.1",
+    "concurrently": "^4.1.0",
+    "husky": "^2.4.1",
+    "rimraf": "^2.6.3",
     "ts-node-dev": "^1.0.0-pre.40",
     "tslint-config-prettier": "^1.17.0",
     "typescript": "^3.2.2"
   },
   "dependencies": {
     "commander": "^2.20.0",
-    "concurrently": "^4.1.0",
     "fastify": "^2.5.0",
     "fastify-formbody": "^3.1.0",
-    "husky": "^2.4.1",
-    "rimraf": "^2.6.3",
     "signale": "^1.4.0",
     "tree-kill": "^1.2.1"
   },
+  "bin": {
+    "hookshot": "build/index.js"
+  },
   "husky": {
     "hooks": {
-      "pre-push": "npm run build"
+      "pre-commit": "npm run build"
     }
   }
 }

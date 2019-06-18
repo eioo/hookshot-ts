@@ -12,28 +12,32 @@ let currentProcess: ChildProcess;
 let startTime: Date;
 let endTime: Date;
 
-async function createServer(port: number, path = '/') {
+async function createServer() {
   const fastify = Fastify();
 
   fastify.register(formbody);
 
-  fastify.post(path, async () => {
+  fastify.post(args.webhookPath, async () => {
     runAction();
     return '';
   });
 
+  fastify.get(args.webhookPath, async () => {
+    return 'heheh';
+  });
+
   try {
-    await fastify.listen(port);
-    logger.info(`Server listening on port ${port}`);
+    await fastify.listen(args.port, '0.0.0.0');
+    logger.info(`Server listening on port ${args.port}`);
   } catch (err) {
-    logger.error(`Server could not listen port ${port}:`, err);
+    logger.error(`Server could not listen port ${args.port}:`, err);
     process.exit(1);
   }
 }
 
 function runAction() {
   let shell = process.env.SHELL;
-  let cmdArgs = ['-c'];
+  let cmdArgs = ['-c', args.command];
   const options: SpawnOptions = { stdio: 'inherit' };
 
   if (shell && isCygwin()) {
@@ -50,8 +54,8 @@ function runAction() {
     }
 
     logger.info(`Running command: "${args.command}"`);
-    startTime = new Date();
     currentProcess = runShellCommand(shell, cmdArgs, options);
+    startTime = new Date();
 
     currentProcess.on('close', () => {
       endTime = new Date();
@@ -64,7 +68,11 @@ function runAction() {
 }
 
 async function main() {
-  await createServer(8080);
+  await createServer();
+
+  if (args.start) {
+    runAction();
+  }
 }
 
 main();
