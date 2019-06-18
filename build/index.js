@@ -45,8 +45,7 @@ var args = argParser_1.parseArguments();
 var currentProcess;
 var startTime;
 var endTime;
-function createServer(port, path) {
-    if (path === void 0) { path = '/'; }
+function createServer() {
     return __awaiter(this, void 0, void 0, function () {
         var fastify, err_1;
         var _this = this;
@@ -55,23 +54,28 @@ function createServer(port, path) {
                 case 0:
                     fastify = Fastify();
                     fastify.register(formbody);
-                    fastify.post(path, function () { return __awaiter(_this, void 0, void 0, function () {
+                    fastify.post(args.webhookPath, function () { return __awaiter(_this, void 0, void 0, function () {
                         return __generator(this, function (_a) {
                             runAction();
                             return [2 /*return*/, ''];
                         });
                     }); });
+                    fastify.get(args.webhookPath, function () { return __awaiter(_this, void 0, void 0, function () {
+                        return __generator(this, function (_a) {
+                            return [2 /*return*/, 'heheh'];
+                        });
+                    }); });
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, fastify.listen(port)];
+                    return [4 /*yield*/, fastify.listen(args.port, '0.0.0.0')];
                 case 2:
                     _a.sent();
-                    logger_1.logger.info("Server listening on port " + port);
+                    logger_1.logger.info("Server listening on port " + args.port);
                     return [3 /*break*/, 4];
                 case 3:
                     err_1 = _a.sent();
-                    logger_1.logger.error("Server could not listen port " + port + ":", err_1);
+                    logger_1.logger.error("Server could not listen port " + args.port + ":", err_1);
                     process.exit(1);
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
@@ -93,7 +97,7 @@ function runAction() {
     }
     if (shell) {
         if (currentProcess && !currentProcess.killed) {
-            currentProcess.kill();
+            osUtils_1.killProcess(currentProcess);
         }
         logger_1.logger.info("Running command: \"" + args.command + "\"");
         currentProcess = osUtils_1.runShellCommand(shell, cmdArgs, options);
@@ -112,7 +116,7 @@ function main() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, createServer(args.port)];
+                case 0: return [4 /*yield*/, createServer()];
                 case 1:
                     _a.sent();
                     if (args.start) {

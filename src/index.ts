@@ -5,7 +5,7 @@ import * as formbody from 'fastify-formbody';
 
 import { parseArguments } from './argParser';
 import { logger } from './logger';
-import { getCygwinPath, isCygwin, isWin, runShellCommand } from './osUtils';
+import { getCygwinPath, isCygwin, isWin, killProcess, runShellCommand } from './osUtils';
 
 const args = parseArguments();
 let currentProcess: ChildProcess;
@@ -50,7 +50,7 @@ function runAction() {
 
   if (shell) {
     if (currentProcess && !currentProcess.killed) {
-      currentProcess.kill();
+      killProcess(currentProcess);
     }
 
     logger.info(`Running command: "${args.command}"`);

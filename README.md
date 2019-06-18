@@ -45,5 +45,5 @@ You can specify following options:
 - Run action on startup with `-s`
 
 ```bash
-hookshot -p 9001 -s 'echo "pushed to master!"'
+hookshot -p 9001 -s 'git pull origin master && pnpm install && pnpm start'
 ```
