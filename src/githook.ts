@@ -4,7 +4,7 @@ import * as Fastify from 'fastify';
 import * as formbody from 'fastify-formbody';
 
 import { logger } from './logger';
-import { getCygwinPath, isCygwin, isWin, killProcess, runShellCommand } from './osUtils';
+import { getCygwinPath, isCygwin, isWin, killProcess, runShellCommand } from './os';
 import { IGitHookOptions } from './types';
 
 export default class GitHook extends EventEmitter {
