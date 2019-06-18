@@ -2,6 +2,8 @@ import * as program from 'commander';
 import * as fs from 'fs';
 import * as path from 'path';
 
+import { logger } from './logger';
+
 export function parseArguments() {
   program
     .version(
@@ -24,6 +26,11 @@ export function parseArguments() {
   });
 
   program.parse(process.argv);
+
+  if (!program.args.length) {
+    logger.error('Please supply a command to run');
+    process.exit(1);
+  }
 
   return {
     port: program.port,

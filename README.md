@@ -10,6 +10,23 @@
 
 This is a fork from [coreh/hookshot](oreh/hookshot) converted to TypeScript.
 
+## Installation
+
+`pnpm install`
+
+### Adding to path
+
+**Windows:**
+
+Add `bin/` folder to your path. After that you can call `hookshot` straight from command prompt.
+
+**Linux:**
+
+- `chmod +x bin/hookshot.sh`
+- `ln -s /hookshot-ts/bin/hookshot.sh /usr/bin/hookshot`
+
+Now you can use `hookshot` from your shell.
+
 ### CLI Tool
 
 The CLI tool takes as argument a command to execute upon GitHub post-receive hook:
