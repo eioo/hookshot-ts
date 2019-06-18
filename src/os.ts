@@ -1,7 +1,7 @@
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as kill from 'tree-kill';
+import * as treeKill from 'tree-kill';
 
 import { logger } from './logger';
 
@@ -14,7 +14,7 @@ export function runShellCommand(
 }
 
 export function killProcess(process: childProcess.ChildProcess) {
-  kill(process.pid);
+  treeKill(process.pid);
 }
 
 export function isWin() {
