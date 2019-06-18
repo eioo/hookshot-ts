@@ -32,7 +32,7 @@ Add `bin/` folder to your path. After that you can call `hookshot` straight from
 
 Now you can use `hookshot` from your shell.
 
-### CLI Toold
+### CLI Tools
 
 The CLI tool takes as argument a command to execute upon GitHub post-receive hook:
 
