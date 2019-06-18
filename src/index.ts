@@ -38,7 +38,9 @@ async function createServer() {
 function runAction() {
   let shell = process.env.SHELL;
   let cmdArgs = ['-c', args.command];
-  const options: SpawnOptions = { stdio: 'inherit' };
+  const options: SpawnOptions = {
+    stdio: 'inherit',
+  };
 
   if (shell && isCygwin()) {
     shell = getCygwinPath(shell);
@@ -57,7 +59,7 @@ function runAction() {
     currentProcess = runShellCommand(shell, cmdArgs, options);
     startTime = new Date();
 
-    currentProcess.on('close', () => {
+    currentProcess.on('exit', () => {
       endTime = new Date();
       logger.info(`Done. Time elapsed: ${+endTime - +startTime}ms`);
     });
