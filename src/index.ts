@@ -1,80 +1,47 @@
 #!/usr/bin/env node
-import { ChildProcess, SpawnOptions } from 'child_process';
-import * as Fastify from 'fastify';
-import * as formbody from 'fastify-formbody';
+import * as program from 'commander';
+import * as fs from 'fs';
+import * as path from 'path';
 
-import { parseArguments } from './argParser';
-import { logger } from './logger';
-import { getCygwinPath, isCygwin, isWin, killProcess, runShellCommand } from './osUtils';
+import GitHook from './githook';
+import { IGitHookOptions } from './types';
 
-const args = parseArguments();
-let currentProcess: ChildProcess;
-let startTime: Date;
-let endTime: Date;
+function parseArguments(): IGitHookOptions {
+  program
+    .version(
+      JSON.parse(
+        fs.readFileSync(path.join(__dirname, '../package.json'), 'utf-8')
+      ).version
+    )
+    .usage('[options] <command>')
+    .option('-p, --port <n>', 'Port number for webhook', 3000)
+    .option('-w, --webhookPath <path>', 'Path for webhook', '/')
+    .option('-s, --start', 'Run command on start');
 
-async function createServer() {
-  const fastify = Fastify();
-
-  fastify.register(formbody);
-
-  fastify.post(args.webhookPath, async () => {
-    runAction();
-    return '';
+  program.on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log(`  $ hookshot 'echo "pushed to master!"'`);
+    console.log(
+      `  $ hookshot -s -p 9001 'git pull origin master && npm install && npm start'`
+    );
   });
 
-  fastify.get(args.webhookPath, async () => {
-    return 'heheh';
-  });
+  program.parse(process.argv);
 
-  try {
-    await fastify.listen(args.port, '0.0.0.0');
-    logger.info(`Server listening on port ${args.port}`);
-  } catch (err) {
-    logger.error(`Server could not listen port ${args.port}:`, err);
-    process.exit(1);
+  if (!program.args.length) {
+    program.help();
   }
-}
 
-function runAction() {
-  let shell = process.env.SHELL;
-  let cmdArgs = ['-c', args.command];
-  const options: SpawnOptions = {
-    stdio: 'inherit',
+  return {
+    port: Number(program.port) || 3000,
+    webhookPath: program.webhookPath,
+    start: program.start,
+    command: program.args.join(' '),
   };
-
-  if (shell && isCygwin()) {
-    shell = getCygwinPath(shell);
-  } else if (isWin()) {
-    shell = process.env.ComSpec;
-    cmdArgs = ['/s', '/c', `"${args.command}"`];
-    options.windowsVerbatimArguments = true;
-  }
-
-  if (shell) {
-    if (currentProcess && !currentProcess.killed) {
-      killProcess(currentProcess);
-    }
-
-    logger.info(`Running command: "${args.command}"`);
-    currentProcess = runShellCommand(shell, cmdArgs, options);
-    startTime = new Date();
-
-    currentProcess.on('exit', () => {
-      endTime = new Date();
-      logger.info(`Done. Time elapsed: ${+endTime - +startTime}ms`);
-    });
-  } else {
-    logger.error('Could not find valid shell to use.');
-    process.exit(1);
-  }
 }
 
-async function main() {
-  await createServer();
+const options = parseArguments();
+const githook = new GitHook(options);
 
-  if (args.start) {
-    runAction();
-  }
-}
-
-main();
+export const Hookshot = GitHook;
