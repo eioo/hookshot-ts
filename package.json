@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eioo/hookshot-ts.git"
+  },
   "scripts": {
     "build": "tsc && pkg --out-path bin/ .",
     "dev": "ts-node-dev --transpileOnly --respawn src/index.ts",
