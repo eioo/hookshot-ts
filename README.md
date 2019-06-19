@@ -14,23 +14,17 @@ This is a fork from [coreh/hookshot](oreh/hookshot) converted to TypeScript.
 
 ```bash
 npm install
-npm start     # Run once with ts-node
-npm build     # Build .js files (bin/hookshot relies on these)
-npm run dev   # Development mode
+npm run start  # Run once with ts-node
+npm run dev    # Development mode
 ```
 
-### Adding to path
+If you want to build binaries you need to install `pkg` package globally with npm.
 
-**Windows:**
+To start the build process, run: `npm run build`
 
-Add `bin/` folder to your path. After that you can call `hookshot` straight from command prompt.
+### Binary downloads
 
-**Linux:**
-
-- `chmod +x bin/hookshot.sh`
-- `ln -s /hookshot-ts/bin/hookshot.sh /usr/bin/hookshot`
-
-Now you can use `hookshot` from your shell.
+Look up this GitHub's release page for downloads.
 
 ### CLI Tools
 

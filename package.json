@@ -4,7 +4,7 @@
   "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf build && tsc --outDir build",
+    "build": "tsc && pkg --out-path bin/ .",
     "dev": "ts-node-dev --transpileOnly --respawn src/index.ts",
     "start": "ts-node-dev src/index.ts"
   },
@@ -12,7 +12,6 @@
     "@types/node": "^12.0.8",
     "@types/signale": "^1.2.1",
     "concurrently": "^4.1.0",
-    "husky": "^2.4.1",
     "rimraf": "^2.6.3",
     "ts-node-dev": "^1.0.0-pre.40",
     "tslint-config-prettier": "^1.17.0",
@@ -27,10 +26,5 @@
   },
   "bin": {
     "hookshot": "build/index.js"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run build"
-    }
   }
 }
