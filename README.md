@@ -13,10 +13,10 @@ This is a fork from [coreh/hookshot](oreh/hookshot) converted to TypeScript.
 ## Installation & building
 
 ```bash
-pnpm install
-pnpm build    # Build .js files so bin/hookshot works
-pnpm start    # Run once with ts-node
-pnpm dev      # Development mode
+npm install
+npm start     # Run once with ts-node
+npm build     # Build .js files (bin/hookshot relies on these)
+npm run dev   # Development mode
 ```
 
 ### Adding to path
@@ -47,5 +47,5 @@ You can specify following options:
 - Run command on startup with `-s`
 
 ```bash
-hookshot -p 9001 -s 'git pull origin master && pnpm install && pnpm start'
+hookshot -p 9001 -s 'git pull origin master && npm install && npm start'
 ```
