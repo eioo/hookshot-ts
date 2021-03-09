@@ -1,4 +1,4 @@
-_This branch is fork of [hookshot](https://github.com/coreh/hookshot) from GitHub user [coreh](https://github.com/coreh)._
+_This repository is fork of [hookshot](https://github.com/coreh/hookshot) from GitHub user [coreh](https://github.com/coreh)._
 
 _Main goal of this project is to migrate the current codebase from JavaScript to TypeScript_ 
 
