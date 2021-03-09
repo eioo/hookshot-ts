@@ -1,14 +1,16 @@
+_This branch is fork of [hookshot](https://github.com/coreh/hookshot) from GitHub user [coreh](https://github.com/coreh)._
+
+_Main goal of this project is to migrate the current codebase from JavaScript to TypeScript_ 
+
 # hookshot-ts
 
-![](https://i.imgur.com/bH81Y52.png)
+![](http://i.cloudup.com/i_vGKjtQcY2.png)
 
 "You found the _hookshot_! It's a spring-loaded chain that you can cast out to hook things."
 
 ## Intro
 
 **hookshot-ts** is a tiny library and companion CLI tool for handling [GitHub post-receive hooks](https://help.github.com/articles/post-receive-hooks).
-
-This is a fork from [coreh/hookshot](oreh/hookshot) converted to TypeScript.
 
 ## Installation & building
 
